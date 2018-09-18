@@ -1,0 +1,4 @@
+include README.rst
+include chromedriver-py/chromedriver.exe
+include chromedriver-py/chromedriver_linux
+include chromedriver-py/chromedriver_mac
