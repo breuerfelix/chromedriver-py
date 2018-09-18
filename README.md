@@ -1,6 +1,4 @@
-# project description
-
-## chromedriver-py
+# chromedriver-py
 
 downloads and installs the latest chromedriver binary version for automated testing of webapps.  
 the installer supports linux, mac and windows operating systems.
