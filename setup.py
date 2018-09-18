@@ -5,8 +5,12 @@ with open('README.md') as f:
     long_description_file = f.read()
 
 
+with open('version.txt') as f:
+    package_version = f.read()
+
+
 setup(name='chromedriver-py',
-      version='2.42.4',
+      version=package_version,
       description="chromedriver binaries for all platforms",
       long_description=long_description_file,
       long_description_content_type="text/markdown",
