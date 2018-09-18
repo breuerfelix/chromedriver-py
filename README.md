@@ -3,6 +3,9 @@
 downloads and installs the latest chromedriver binary version for automated testing of webapps.  
 the installer supports linux, mac and windows operating systems.
 
+this package is maintained by an automated update script.  
+if a new chromedriver version is out, this package will automaticly get updated.
+
 ## installation
 
 __from pypi__  
