@@ -6,7 +6,7 @@ with open('README.md') as f:
 
 
 setup(name='chromedriver-py',
-      version='2.42.2',
+      version='2.42.3',
       description="chromedriver binaries for all platforms",
       long_description=long_description_file,
       long_description_content_type="text/markdown",
