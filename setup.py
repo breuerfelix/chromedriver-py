@@ -1,25 +1,25 @@
 from setuptools import setup
 
-def readme():
-    with open('README.rst') as f:
-        return f.read()
+
+with open('README.md') as f:
+    long_description_file = f.read()
+
 
 setup(name='chromedriver-py',
-      version='0.1',
-      description=readme(),
-      long_description='Really, the funniest around.',
+      version='2.42.1',
+      description="chromedriver binaries for all platforms",
+      long_description=long_description_file,
+      long_description_content_type="text/markdown",
       classifiers=[
-        'Development Status :: 3 - Alpha',
-        'License :: OSI Approved :: MIT License',
-        'Programming Language :: Python :: 2.7',
-        'Topic :: Text Processing :: Linguistic',
+          'License :: OSI Approved :: MIT License',
+          'Programming Language :: Python',
+          'Operating System :: OS Independent',
       ],
       keywords='chromedriver cross-platform binaries binary',
       url='http://github.com/scriptworld-git/chromedriver-py',
       author='felix.scriptworld',
       author_email='felix@scriptworld.net',
-      license='MIT',
-      packages=['chromedriver-py'],
+      packages=['chromedriver_py'],
       install_requires=[],
       include_package_data=True,
       zip_safe=False)
