@@ -9,3 +9,4 @@
 
 .DS_Store
 .mypy_cache
+/chromedriver_py/chromedriver*

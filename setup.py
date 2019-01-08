@@ -1,11 +1,12 @@
 from setuptools import setup
 
+CURRENT_VERSION_FILE = './CURRENT_VERSION.txt'
 
 with open('README.md') as f:
     long_description_file = f.read()
 
 
-with open('version.txt') as f:
+with open(CURRENT_VERSION_FILE) as f:
     package_version = f.read()
 
 
@@ -21,7 +22,7 @@ setup(name='chromedriver-py',
       ],
       keywords='chromedriver cross-platform binaries binary',
       url='http://github.com/scriptworld-git/chromedriver-py',
-      author='felix.scriptworld',
+      author='Felix Breuer',
       author_email='felix@scriptworld.net',
       packages=['chromedriver_py'],
       install_requires=[],
