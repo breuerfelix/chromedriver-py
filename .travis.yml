@@ -1,0 +1,16 @@
+language: python
+
+cache: pip
+
+python:
+    - 3
+
+branches:
+  only:
+    - master
+
+install:
+  - pip3 install -r requirements.txt
+
+script:
+  - python3 updater.py
