@@ -19,11 +19,11 @@ def _get_filename(last_bit = None):
 
     sys = platform.system()
     if sys == 'Windows':
-        path += '_win'
+        path += 'win'
     elif sys == 'Darwin':
-        path += '_mac'
+        path += 'mac'
     elif sys == 'Linux':
-        path += '_linux'
+        path += 'linux'
     else:
         raise Exception('could not identify your system!')
 
@@ -35,7 +35,7 @@ def _get_filename(last_bit = None):
 
     exists = os.path.isfile(path)
 
-    if not exists:
+    if not exists and not last_bit:
         path = _get_filename(bit)
 
     if not path:
