@@ -15,8 +15,7 @@ CHROMEDRIVER_EXTENSION = '.zip'
 DOWNLOAD_DIR = './chromedriver_py/'
 VERSION_FILE = './CURRENT_VERSION.txt'
 
-bla = os.environ.get('VERSION')
-print('ENVIRONMENT: ' + str(bla))
+
 
 def compare_int_arrays(old, new):
     if len(old) != len(new): return False
@@ -189,25 +188,29 @@ def get_version_from_file(path):
     return None
 
 
+# get environment version for custom travis builds
+env_version = os.environ.get('VERSION')
 
-current_version = get_version_from_file(VERSION_FILE)
-print('current version: ' + str(current_version))
+if not env_version:
+    current_version = get_version_from_file(VERSION_FILE)
+    print('current version: ' + str(current_version))
 
-version, _ = check_for_update(current_version)
+    version, _ = check_for_update(current_version)
 
-# static number to publish specific version
-version = '2.45'
-
-if not version:
-    # exit with code 1 to prevent auto deploy
-    sys.exit(1)
+    if not version:
+        # exit with code 1 to prevent auto deploy
+        sys.exit(1)
+else:
+    print('got version from environment: ' + env_version)
+    version = env_version
 
 version = update_version(version)
+print('version updated: ' + version)
 
-# update version file
-print('version updated to: ' + version)
-with open(VERSION_FILE, 'w') as f:
-    f.write(version)
+if not env_version:
+    # update version file
+    with open(VERSION_FILE, 'w') as f:
+        f.write(version)
 
 # exit with code 0 to enable auto-deploy
 sys.exit(0)
