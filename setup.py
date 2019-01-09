@@ -7,7 +7,7 @@ with open('README.md') as f:
 
 
 with open(CURRENT_VERSION_FILE) as f:
-    package_version = f.read().strip()
+    package_version = f.read().strip() + '.3'
 
 
 setup(name='chromedriver-py',
