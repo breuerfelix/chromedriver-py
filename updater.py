@@ -190,9 +190,10 @@ print('current version: ' + str(current_version))
 version, _ = check_for_update(current_version)
 
 # static number to publish specific version
-#version = '2.44'
+version = '2.45'
 
 if not version:
+    # exit with code 1 to prevent auto deploy
     sys.exit(1)
 
 version = update_version(version)
@@ -202,4 +203,5 @@ print('version updated to: ' + version)
 with open(VERSION_FILE, 'w') as f:
     f.write(version)
 
+# exit with code 0 to enable auto-deploy
 sys.exit(0)
