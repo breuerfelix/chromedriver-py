@@ -15,7 +15,8 @@ CHROMEDRIVER_EXTENSION = '.zip'
 DOWNLOAD_DIR = './chromedriver_py/'
 VERSION_FILE = './CURRENT_VERSION.txt'
 
-
+bla = os.environ.get('VERSION')
+print('ENVIRONMENT: ' + str(bla))
 
 def compare_int_arrays(old, new):
     if len(old) != len(new): return False
