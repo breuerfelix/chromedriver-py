@@ -19,17 +19,14 @@ install:
 script:
   - python3 updater.py
 
-before_deploy:
-  - echo "hello world"
 deploy:
   provider: pypi
   user: scriptworld
   password: $PYPI_PASSWORD
   distributions: sdist bdist_wheel
   skip_existing: true
+  skip_cleanup: true
   on:
     branch: master
 after_deploy:
   - echo "done !"
-  - git add -all && git commit -a -m "update version" && git push
-  - echo "done pushing to git"
