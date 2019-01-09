@@ -189,6 +189,8 @@ print('current version: ' + str(current_version))
 
 version, _ = check_for_update(current_version)
 
+version = '2.44'
+
 if not version:
     sys.exit(1)
 
