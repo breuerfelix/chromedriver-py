@@ -11,6 +11,7 @@ PLATFORMS = [ 'mac', 'win', 'linux' ]
 BIT_VERSIONS = [ '64', '32' ]
 CHROMEDRIVER_FILE_NAME = 'chromedriver_'
 CHROMEDRIVER_EXTENSION = '.zip'
+CHROMEDRIVER_PERMISSION = 111
 
 DOWNLOAD_DIR = './chromedriver_py/'
 VERSION_FILE = './CURRENT_VERSION.txt'
@@ -162,7 +163,11 @@ def update_version(version):
                 filename += '.exe'
 
             print('rename file to: ' + filename)
-            os.rename(os.path.join(DOWNLOAD_DIR, extracted_name), os.path.join(DOWNLOAD_DIR, filename))
+            final_path = os.path.join(DOWNLOAD_DIR, filename)
+            os.rename(os.path.join(DOWNLOAD_DIR, extracted_name), final_path)
+
+            # give execute permission
+            os.chmod(final_path, CHROMEDRIVER_PERMISSION)
 
             # delete zip file
             print('removing file: ' + path)
