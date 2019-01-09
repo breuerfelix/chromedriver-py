@@ -16,7 +16,7 @@ setup(name='chromedriver-py',
       long_description=long_description_file,
       long_description_content_type="text/markdown",
       classifiers=[
-          'License :: OSI Approved :: MIT License',
+          'License :: OSI Approved :: Apache Software License',
           'Programming Language :: Python',
           'Operating System :: OS Independent',
       ],
