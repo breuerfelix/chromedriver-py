@@ -14,6 +14,7 @@ CHROMEDRIVER_EXTENSION = '.zip'
 
 DOWNLOAD_DIR = './chromedriver_py/'
 VERSION_FILE = './CURRENT_VERSION.txt'
+CHECK_VERSION_FILE = './CHECK_VERSION.txt'
 
 
 
@@ -159,6 +160,7 @@ def update_version(version):
             extracted_name = 'chromedriver'
             if p == 'win':
                 extracted_name += '.exe'
+                filename += '.exe'
 
             print('rename file to: ' + filename)
             os.rename(os.path.join(DOWNLOAD_DIR, extracted_name), os.path.join(DOWNLOAD_DIR, filename))
@@ -171,9 +173,9 @@ def update_version(version):
 
 
 
-def get_current_version():
+def get_version_from_file(path):
     try:
-        with open(VERSION_FILE, 'r') as f:
+        with open(path, 'r') as f:
             current_version = f.read().strip()
 
         return current_version
@@ -183,19 +185,23 @@ def get_current_version():
 
 
 
-current_version = get_current_version()
-print('current version: ' + str(current_version))
-
-version, _ = check_for_update(current_version)
+version = get_version_from_file(CHECK_VERSION_FILE)
 
 if not version:
-    sys.exit(1)
+    current_version = get_version_from_file(VERSION_FILE)
+    print('current version: ' + str(current_version))
 
-version = update_version(version)
+    version, _ = check_for_update(current_version)
 
-# update version file
-print('version updated to: ' + version)
-with open(VERSION_FILE, 'w') as f:
-    f.write(version)
+    if not version:
+        sys.exit(1)
+
+new_version = update_version(version)
+
+if not version:
+    # update version file
+    print('version updated to: ' + new_version)
+    with open(VERSION_FILE, 'w') as f:
+        f.write(new_version)
 
 sys.exit(0)
