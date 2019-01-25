@@ -207,10 +207,9 @@ else:
 version = update_version(version)
 print('version updated: ' + version)
 
-if not env_version:
-    # update version file
-    with open(VERSION_FILE, 'w') as f:
-        f.write(version)
+# update version file
+with open(VERSION_FILE, 'w') as f:
+    f.write(version)
 
 # exit with code 0 to enable auto-deploy
 sys.exit(0)
