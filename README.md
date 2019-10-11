@@ -15,7 +15,7 @@ $ pip install chromedriver-py
 
 __from github__
 ```bash
-$ pip install git+https://github.com/scriptworld-git/chromedriver-py.git
+$ pip install git+https://github.com/breuerfelix/chromedriver-py.git
 ```
 
 ## usage
