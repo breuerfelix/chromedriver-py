@@ -18,9 +18,9 @@ VERSION_FILE = './CURRENT_VERSION.txt'
 
 
 def compare_int_arrays(old, new):
-    if len(old) != len(new): return False
+    shortest = old if len(old) < len(new) else new
 
-    for i in range(len(old)):
+    for i in range(len(shortest)):
         if new[i] == old[i]:
             continue
 
@@ -101,16 +101,6 @@ def check_for_update(old_version_param = None):
         if not versions:
             continue
 
-        # continue if version format is different
-        if len(old_version) != len(versions):
-            print('version format does not match: ' + str(versions))
-            continue
-
-        # continue if version is really high, these are nightly releases
-        if versions[0] >= 70:
-            print('version to high: ' + str(versions[0]))
-            continue
-
         if compare_int_arrays(old_version, versions):
             versions_to_update.add('.'.join(str(x) for x in versions))
 
@@ -187,29 +177,30 @@ def get_version_from_file(path):
 
     return None
 
+if __name__ == '__main__':
+    # get environment version for custom travis builds
+    env_version = os.environ.get('VERSION')
 
-# get environment version for custom travis builds
-env_version = os.environ.get('VERSION')
+    if not env_version:
+        current_version = get_version_from_file(VERSION_FILE)
+        print('current version: ' + str(current_version))
 
-if not env_version:
-    current_version = get_version_from_file(VERSION_FILE)
-    print('current version: ' + str(current_version))
+        version, _ = check_for_update(current_version)
 
-    version, _ = check_for_update(current_version)
+        if not version:
+            # exit with code 1 to prevent auto deploy
+            sys.exit(1)
+    else:
+        print('got version from environment: ' + env_version)
+        version = env_version
 
-    if not version:
-        # exit with code 1 to prevent auto deploy
-        sys.exit(1)
-else:
-    print('got version from environment: ' + env_version)
-    version = env_version
-
-version = update_version(version)
-print('version updated: ' + version)
+    version = update_version(version)
+    print('version updated: ' + version)
 
 # update version file
-with open(VERSION_FILE, 'w') as f:
-    f.write(version)
+    with open(VERSION_FILE, 'w') as f:
+        # only write the major and minor version to file
+        f.write(version)
 
 # exit with code 0 to enable auto-deploy
-sys.exit(0)
+    sys.exit(0)
