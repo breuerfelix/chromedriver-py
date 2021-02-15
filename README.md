@@ -8,14 +8,21 @@ if a new chromedriver version is out, this package will automaticly get updated 
 
 ## installation
 
-__from pypi__  
+__from pypi:__
 ```bash
 $ pip install chromedriver-py
 ```
 
-__from github__
+__from github:__
 ```bash
 $ pip install git+https://github.com/breuerfelix/chromedriver-py.git
+```
+
+__specific version:__  
+choose your version [here](https://pypi.org/project/chromedriver-py/#history)
+```bash
+# example for chrome version 88
+pip install chromedriver-py==88.0.4324.96
 ```
 
 ## usage
