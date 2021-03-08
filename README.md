@@ -28,7 +28,7 @@ pip install chromedriver-py==88.0.4324.96
 ## usage
 
 to use chromedriver just `from chromedriver_py import binary_path`.  
-you will get a string variable with the excecutable filepath for your operating system.
+you will get a string variable with the executable filepath for your operating system.
 
 ## example
 ```python
