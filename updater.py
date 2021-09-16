@@ -43,7 +43,7 @@ def check_for_update(old_version_param = None):
             old_version.append(int(v))
     except:
         print('error parsing old version!')
-        return None;
+        return None, None
 
     print('old version: ' + str(old_version))
 
@@ -62,7 +62,7 @@ def check_for_update(old_version_param = None):
         if not key:
             # key not found
             continue
-        
+
         key = key[0]
         key = key.get_text()
 
@@ -173,7 +173,8 @@ def get_version_from_file(path):
             current_version = f.read().strip()
 
         return current_version
-    except: return None
+    except:
+        pass
 
     return None
 
@@ -197,10 +198,10 @@ if __name__ == '__main__':
     version = update_version(version)
     print('version updated: ' + version)
 
-# update version file
+    # update version file
     with open(VERSION_FILE, 'w') as f:
         # only write the major and minor version to file
         f.write(version)
 
-# exit with code 0 to enable auto-deploy
+    # exit with code 0 to enable auto-deploy
     sys.exit(0)
