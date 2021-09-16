@@ -9,7 +9,7 @@ def _get_bit(last = None):
     if last and last == '32': return '64'
 
     if platform.machine().endswith('64'): return '64'
-    
+
     return '32'
 
 
