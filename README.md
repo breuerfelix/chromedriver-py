@@ -42,11 +42,6 @@ assert "Python" in driver.title
 
 ## developer
 
-you can trigger a custom build with a specific version in travis.  
-just make a new environment variable in travis settings with the name `VERSION`.  
-the key will be your desired version like `2.44`.
-
-for the last step you have to click on settings again and hit `trigger build`.  
-this will try to get your desired version and push it to pypi.
-
-__important:__ don't forget to delete the environment variable later on!
+you can trigger a custom build with a specific version in github actions.  
+just click `Run workflow` and put your desired version in the `version` input field that pops up.  
+the workflow tries to get your desired version and push it to pypi.
