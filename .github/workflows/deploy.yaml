@@ -5,6 +5,12 @@ on:
     - cron: '0 * * * *'
   push:
     branches: [ master ]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to update'
+        required: false
+        default: ''
 
 jobs:
   build-and-deploy:
@@ -17,7 +23,10 @@ jobs:
         with:
           python-version: 3.9
       - run: pip3 install -r requirements.txt
-      - run: python3 updater.py
+      - name: Search for new version
+        run: python3 updater.py
+        env:
+          VERSION: ${{ github.event.inputs.version }}
       - name: Install pypa/build
         run: >-
           python -m
