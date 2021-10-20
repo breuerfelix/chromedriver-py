@@ -24,7 +24,7 @@ setup(
     keywords="chromedriver cross-platform binaries binary",
     url="http://github.com/scriptworld-git/chromedriver-py",
     author="Felix Breuer",
-    author_email="felix@scriptworld.net",
+    author_email="fbreuer@pm.me",
     packages=["chromedriver_py"],
     install_requires=[],
     include_package_data=True,

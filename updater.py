@@ -7,8 +7,12 @@ from bs4 import BeautifulSoup as bs
 
 # constants
 CHROMEDRIVER_URL = "https://chromedriver.storage.googleapis.com/"
-PLATFORMS = ["mac", "win", "linux"]
-BIT_VERSIONS = ["64", "32"]
+PLATFORMS = [
+    "linux64",
+    "win32",
+    "mac64",
+    "mac64_m1",
+]
 CHROMEDRIVER_FILE_NAME = "chromedriver_"
 CHROMEDRIVER_EXTENSION = ".zip"
 
@@ -119,47 +123,46 @@ def check_for_update(old_version_param=None):
 
 def update_version(version):
     for p in PLATFORMS:
-        for b in BIT_VERSIONS:
-            filename = CHROMEDRIVER_FILE_NAME + p + b
-            filename_version = version + "/" + filename + CHROMEDRIVER_EXTENSION
-            url = CHROMEDRIVER_URL + filename_version
-            print(url)
+        filename = CHROMEDRIVER_FILE_NAME + p
+        filename_version = version + "/" + filename + CHROMEDRIVER_EXTENSION
+        url = CHROMEDRIVER_URL + filename_version
+        print(url)
 
-            # downloads the files
-            try:
-                file = urllib.request.urlopen(url)
-            except:
-                print("could not get file: " + filename)
-                continue
+        # downloads the files
+        try:
+            file = urllib.request.urlopen(url)
+        except:
+            print("could not get file: " + filename)
+            continue
 
-            # save file to system
-            path = os.path.join(DOWNLOAD_DIR, filename + CHROMEDRIVER_EXTENSION)
-            with open(path, "wb") as output:
-                print("write to: " + path)
-                output.write(file.read())
+        # save file to system
+        path = os.path.join(DOWNLOAD_DIR, filename + CHROMEDRIVER_EXTENSION)
+        with open(path, "wb") as output:
+            print("write to: " + path)
+            output.write(file.read())
 
-            # unzip file
-            print("unzip file: " + path)
-            with zipfile.ZipFile(path, "r") as zip_ref:
-                zip_ref.extractall(DOWNLOAD_DIR)
+        # unzip file
+        print("unzip file: " + path)
+        with zipfile.ZipFile(path, "r") as zip_ref:
+            zip_ref.extractall(DOWNLOAD_DIR)
 
-            # rename file
-            extracted_name = "chromedriver"
-            if p == "win":
-                extracted_name += ".exe"
-                filename += ".exe"
+        # rename file
+        extracted_name = "chromedriver"
+        if p == "win":
+            extracted_name += ".exe"
+            filename += ".exe"
 
-            print("rename file to: " + filename)
-            final_path = os.path.join(DOWNLOAD_DIR, filename)
-            os.rename(os.path.join(DOWNLOAD_DIR, extracted_name), final_path)
+        print("rename file to: " + filename)
+        final_path = os.path.join(DOWNLOAD_DIR, filename)
+        os.rename(os.path.join(DOWNLOAD_DIR, extracted_name), final_path)
 
-            # give execute permission
-            print("setting permissions")
-            os.chmod(final_path, 0o755)
+        # give execute permission
+        print("setting permissions")
+        os.chmod(final_path, 0o755)
 
-            # delete zip file
-            print("removing file: " + path)
-            os.remove(path)
+        # delete zip file
+        print("removing file: " + path)
+        os.remove(path)
 
     return version
 

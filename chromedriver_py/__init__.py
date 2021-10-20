@@ -4,44 +4,31 @@ import platform
 _BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
-def _get_bit(last=None):
-    if last and last == "64":
-        return "32"
-    if last and last == "32":
-        return "64"
 
-    if platform.machine().endswith("64"):
-        return "64"
-
-    return "32"
-
-
-def _get_filename(last_bit=None):
+def _get_filename():
     path = os.path.join(_BASE_DIR, "chromedriver_")
+    machine = platform.machine()
 
     sys = platform.system()
     if sys == "Windows":
-        path += "win"
+        path += "win32.exe"
     elif sys == "Darwin":
-        path += "mac"
+        path += "mac64"
+        if "arm" in machine:
+            path += "_m1"
     elif sys == "Linux":
-        path += "linux"
+        if machine.endswith("32"):
+            raise Exception("Google doesn't compile 32bit chromedriver versions for Linux. Sorry!")
+        if "arm" in machine:
+            raise Exception("Google doesn't compile chromedriver versions for Linux ARM. Sorry!")
+        path += "linux64"
     else:
-        raise Exception("could not identify your system!")
+        raise Exception("Could not identify your system: " + sys)
 
-    bit = _get_bit(last_bit)
-    path += bit
-
-    if sys == "Windows":
-        path += ".exe"
-
-    exists = os.path.isfile(path)
-
-    if not exists and not last_bit:
-        path = _get_filename(bit)
-
-    if not path:
-        raise Exception("error getting your chromedriver version")
+    if not path or not os.path.isfile(path):
+        msg = "Couldn't find a binary for your system: " + sys + " / " + machine + ". "
+        msg += "Please create an Issue on github.com/breuerfelix/chromedriver-py and include this Message."
+        raise Exception(msg)
 
     return path
 
