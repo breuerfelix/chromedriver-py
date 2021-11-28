@@ -148,7 +148,7 @@ def update_version(version):
 
         # rename file
         extracted_name = "chromedriver"
-        if p == "win":
+        if p in ["win", "win32", "win64"]:
             extracted_name += ".exe"
             filename += ".exe"
 
