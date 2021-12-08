@@ -7,16 +7,16 @@ _BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 def _get_filename():
     path = os.path.join(_BASE_DIR, "chromedriver_")
-    machine = platform.machine()
+    machine = platform.machine().lower()
 
-    sys = platform.system()
-    if sys == "Windows":
+    sys = platform.system().lower()
+    if sys == "windows":
         path += "win32.exe"
-    elif sys == "Darwin":
+    elif sys == "darwin":
         path += "mac64"
         if "arm" in machine:
             path += "_m1"
-    elif sys == "Linux":
+    elif sys == "linux":
         if machine.endswith("32"):
             raise Exception("Google doesn't compile 32bit chromedriver versions for Linux. Sorry!")
         if "arm" in machine:

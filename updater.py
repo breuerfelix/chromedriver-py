@@ -7,17 +7,19 @@ from bs4 import BeautifulSoup as bs
 
 # constants
 CHROMEDRIVER_URL = "https://chromedriver.storage.googleapis.com/"
+CHROMEDRIVER_FILE_NAME = "chromedriver_"
+CHROMEDRIVER_EXTENSION = ".zip"
+
+DOWNLOAD_DIR = "./chromedriver_py/"
+VERSION_FILE = "./CURRENT_VERSION.txt"
+
+# don't forget to include all platforms in 'MANIFEST.in' file!
 PLATFORMS = [
     "linux64",
     "win32",
     "mac64",
     "mac64_m1",
 ]
-CHROMEDRIVER_FILE_NAME = "chromedriver_"
-CHROMEDRIVER_EXTENSION = ".zip"
-
-DOWNLOAD_DIR = "./chromedriver_py/"
-VERSION_FILE = "./CURRENT_VERSION.txt"
 
 
 def compare_int_arrays(old, new):

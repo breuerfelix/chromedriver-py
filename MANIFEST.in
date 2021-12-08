@@ -1,8 +1,6 @@
 include README.md
 include CURRENT_VERSION.txt
 include chromedriver_py/chromedriver_win32.exe
-include chromedriver_py/chromedriver_win64.exe
-include chromedriver_py/chromedriver_linux32
 include chromedriver_py/chromedriver_linux64
-include chromedriver_py/chromedriver_mac32
 include chromedriver_py/chromedriver_mac64
+include chromedriver_py/chromedriver_mac64_m1
