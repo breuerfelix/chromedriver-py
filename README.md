@@ -35,7 +35,11 @@ you will get a string variable with the executable filepath for your operating s
 from selenium import webdriver
 from chromedriver_py import binary_path # this will get you the path variable
 
-driver = webdriver.Chrome(executable_path=binary_path)
+service_object = Service(binary_path)
+driver = webdriver.Chrome(service=service_object)
+
+# deprecated but works in older selenium versions
+# driver = webdriver.Chrome(executable_path=binary_path)
 driver.get("http://www.python.org")
 assert "Python" in driver.title
 ```
