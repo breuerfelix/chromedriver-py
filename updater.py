@@ -14,11 +14,12 @@ DOWNLOAD_DIR = "./chromedriver_py/"
 VERSION_FILE = "./CURRENT_VERSION.txt"
 
 # don't forget to include all platforms in 'MANIFEST.in' file!
+# also update the import path in the package
 PLATFORMS = [
     "linux64",
     "win32",
     "mac64",
-    "mac64_m1",
+    "mac_arm64",
 ]
 
 

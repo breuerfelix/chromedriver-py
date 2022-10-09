@@ -13,9 +13,11 @@ def _get_filename():
     if sys == "windows":
         path += "win32.exe"
     elif sys == "darwin":
-        path += "mac64"
+        path += "mac"
         if "arm" in machine:
-            path += "_m1"
+            path += "_arm64"
+        else:
+            path += "64"
     elif sys == "linux":
         if machine.endswith("32"):
             raise Exception("Google doesn't compile 32bit chromedriver versions for Linux. Sorry!")
