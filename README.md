@@ -8,14 +8,12 @@ if a new chromedriver version is out, this package will automaticly get updated 
 
 ## installation
 
+due to the way how the pipeline packages the binaries, you cannot install the package from github.  
+installing from pypi is the only option.
+
 __from pypi:__
 ```bash
 $ pip install chromedriver-py
-```
-
-__from github:__
-```bash
-$ pip install git+https://github.com/breuerfelix/chromedriver-py.git
 ```
 
 __specific version:__  
