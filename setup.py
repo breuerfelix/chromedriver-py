@@ -22,7 +22,7 @@ setup(
         "Operating System :: OS Independent",
     ],
     keywords="chromedriver cross-platform binaries binary",
-    url="http://github.com/scriptworld-git/chromedriver-py",
+    url="http://github.com/breuerfelix/chromedriver-py",
     author="Felix Breuer",
     author_email="fbreuer@pm.me",
     packages=["chromedriver_py"],
