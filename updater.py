@@ -2,6 +2,7 @@ import requests
 import zipfile
 import io
 import os
+import sys
 
 URL = "https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json"
 PLATFORMS = [
@@ -16,6 +17,12 @@ VERSION_FILE = "CURRENT_VERSION.txt"
 def fetch_latest_version():
     stable = requests.get(URL).json()["channels"]["Stable"]
     return stable["version"], stable
+
+def pypi_exists(version):
+    url = f"https://pypi.org/pypi/chromedriver-py/{version}/json"
+    response = requests.get(url)
+    return response.status_code == 200
+
 
 def download_binaries(channel):
     for p in channel["downloads"]["chromedriver"]:
@@ -52,6 +59,8 @@ def download_binaries(channel):
 
 if __name__ == "__main__":
     version, channel = fetch_latest_version()
+    if pypi_exists(version):
+        sys.exit(0)
 
     print(f"using version: {version}")
     download_binaries(channel)
