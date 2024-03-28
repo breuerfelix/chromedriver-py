@@ -41,9 +41,3 @@ driver = webdriver.Chrome(service=svc)
 driver.get("http://www.python.org")
 assert "Python" in driver.title
 ```
-
-## developer
-
-you can trigger a custom build with a specific version in github actions.  
-just click `Run workflow` and put your desired version in the `version` input field that pops up.  
-the workflow tries to get your desired version and push it to pypi.
