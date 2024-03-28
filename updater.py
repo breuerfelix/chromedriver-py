@@ -13,18 +13,17 @@ PLATFORMS = [
 ]
 VERSION_FILE = "CURRENT_VERSION.txt"
 
-def download_url(version, platform, binary):
-    return f"https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/{version}/{platform}/{binary}-{platform}.zip"
-
 def fetch_latest_version():
-    return requests.get(URL).json()["channels"]["Stable"]["version"]
+    stable = requests.get(URL).json()["channels"]["Stable"]
+    return stable["version"], stable
 
-def download_binaries(version):
-    for platform in PLATFORMS:
+def download_binaries(channel):
+    for p in channel["downloads"]["chromedriver"]:
+        platform = p["platform"]
+        url = p["url"]
         print(f"platform: {platform}")
 
         print("downloading zip file")
-        url = download_url(version, platform, "chromedriver")
         r = requests.get(url)
         z = zipfile.ZipFile(io.BytesIO(r.content))
 
@@ -52,12 +51,10 @@ def download_binaries(version):
 
 
 if __name__ == "__main__":
-    version = os.getenv("VERSION")
-    if not version:
-        version = fetch_latest_version()
+    version, channel = fetch_latest_version()
 
     print(f"using version: {version}")
-    download_binaries(version)
+    download_binaries(channel)
 
     with open(VERSION_FILE, "w") as f:
         f.write(version)
