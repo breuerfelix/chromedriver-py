@@ -43,7 +43,7 @@ def download_binaries(channel):
             dest += ".exe"
 
         print("extracting zip file")
-        z.extract(origin)
+        z.extract(origin.replace("\\", "/"))
 
         print("moving file to correct folder")
         os.rename(origin, dest)
