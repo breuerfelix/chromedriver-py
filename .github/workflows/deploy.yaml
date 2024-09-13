@@ -8,6 +8,10 @@ on:
 
 jobs:
   build-and-deploy:
+    strategy:
+      fail-fast: false
+      matrix:
+        channel: ["Stable", "Beta", "Dev", "Canary"]
     runs-on: ubuntu-latest
     steps:
       -
@@ -20,7 +24,7 @@ jobs:
         run: pip3 install -r requirements.txt
       -
         name: Search for new version
-        run: python3 updater.py
+        run: python3 updater.py ${{ matrix.channel }}
       -
         name: Install pypa/build
         # only run if we found a new version

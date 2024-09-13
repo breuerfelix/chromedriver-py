@@ -1,3 +1,4 @@
+from typing import Literal, TypeAlias, cast
 import requests
 import zipfile
 import io
@@ -14,9 +15,18 @@ PLATFORMS = [
 ]
 VERSION_FILE = "CURRENT_VERSION.txt"
 
-def fetch_latest_version():
-    stable = requests.get(URL).json()["channels"]["Stable"]
-    return stable["version"], stable
+Channel: TypeAlias = Literal["Canary", "Dev", "Beta", "Stable"]
+
+prerelease_specifiers: dict[Channel, str] = {
+    "Stable": "",
+    "Beta": "b",
+    "Dev": "a",
+    "Canary": ".dev"
+}
+
+def fetch_latest_version(channel: Channel):
+    result = requests.get(URL).json()["channels"][channel]
+    return result["version"], result
 
 def pypi_exists(version):
     url = f"https://pypi.org/pypi/chromedriver-py/{version}/json"
@@ -58,12 +68,14 @@ def download_binaries(channel):
 
 
 if __name__ == "__main__":
-    version, channel = fetch_latest_version()
-    if pypi_exists(version):
+    channel = cast(Channel, sys.argv[1])
+    version, result = fetch_latest_version(channel)
+    pypi_version = version + prerelease_specifiers[channel]
+    if pypi_exists(pypi_version):
         sys.exit(0)
 
     print(f"using version: {version}")
-    download_binaries(channel)
+    download_binaries(result)
 
     with open(VERSION_FILE, "w") as f:
-        f.write(version)
+        f.write(pypi_version)
