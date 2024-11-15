@@ -11,7 +11,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        channel: ["Stable", "Beta", "Dev", "Canary"]
+        # channel: ["Stable", "Beta", "Dev", "Canary"]
+        # only run stable channel until pypi storage problem is fixed
+        channel: ["Stable"]
     runs-on: ubuntu-latest
     steps:
       -
