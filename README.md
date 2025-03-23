@@ -13,31 +13,27 @@ installing from pypi is the only option.
 
 __from pypi:__
 ```bash
-$ pip install chromedriver-py
+uv add chromedriver-py
 ```
 
 __specific version:__  
 choose your version [here](https://pypi.org/project/chromedriver-py/#history)
 ```bash
 # example for chrome version 88
-pip install chromedriver-py==88.0.4324.96
+uv add chromedriver-py==88.0.4324.96
 ```
 
 ## usage
 
-to use chromedriver just `from chromedriver_py import binary_path`.  
-you will get a string variable with the executable filepath for your operating system.
+chromedriver will now be located in you system path and will used automatically
 
 ## example
 ```python
 from selenium import webdriver
-from chromedriver_py import binary_path # this will get you the path variable
 
-svc = webdriver.ChromeService(executable_path=binary_path)
+svc = webdriver.ChromeService()  # it will be in the path automatically
 driver = webdriver.Chrome(service=svc)
 
-# deprecated but works in older selenium versions
-# driver = webdriver.Chrome(executable_path=binary_path)
 driver.get("http://www.python.org")
 assert "Python" in driver.title
 ```

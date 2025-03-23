@@ -1,49 +1,39 @@
-import os
-import platform
+from __future__ import annotations
 
-_BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-
-
-
-def _get_filename():
-    path = os.path.join(_BASE_DIR, "chromedriver_")
-
-    machine = platform.machine().lower()
-    sys = platform.system().lower()
-
-    # windows
-    if sys == "windows":
-        if machine.endswith("64"):
-            path += "win64.exe"
-        else:
-            path += "win32.exe"
-
-    # mac
-    elif sys == "darwin":
-        path += "mac"
-        if "arm" in machine:
-            path += "-arm64"
-        else:
-            path += "-x64"
-
-    # linux
-    elif sys == "linux":
-        if "arm" in machine:
-            raise Exception("Google doesn't compile chromedriver versions for Linux ARM. Sorry!")
-        if machine.endswith("32"):
-            raise Exception("Google doesn't compile 32bit chromedriver versions for Linux. Sorry!")
-        path += "linux64"
-
-    # undefined
-    else:
-        raise Exception("Could not identify your system: " + sys)
-
-    if not path or not os.path.isfile(path):
-        msg = "Couldn't find a binary for your system: " + sys + " / " + machine + ". "
-        msg += "Please create an Issue on github.com/breuerfelix/chromedriver-py and include this Message."
-        raise Exception(msg)
-
-    return path
+import subprocess
+import sys
+from importlib.resources import files
+from os import PathLike
+from pathlib import Path
+from typing import Iterable
 
 
-binary_path = _get_filename()
+def binary_path() -> str:
+    """deprecated, use `chromedriver_path` instead"""
+    return str(chromedriver_path())
+
+
+def chromedriver_path() -> Path:
+    is_windows = sys.platform.startswith("win")
+    binary_name = "chromedriver.exe" if is_windows else "chromedriver"
+    binary_path = files("chromedriver_py").joinpath(binary_name)
+
+    result = Path(str(binary_path))
+    if not result.exists():
+        raise FileNotFoundError(f"Could not find chromedriver binary at {result}")
+
+    return result
+
+
+def run_chromedriver(args: Iterable[str | PathLike]) -> int:
+    return subprocess.run([chromedriver_path(), *args], check=False).returncode
+
+
+def main(args: Iterable[str | PathLike] | None = None):
+    if args is None:
+        args = sys.argv[1:]
+    return run_chromedriver(args)
+
+
+if __name__ == "__main__":
+    sys.exit(main())
